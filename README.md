@@ -1,16 +1,35 @@
-# React + Vite
+# Orçamento Pessoal Simples
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+MVP de um mini-SaaS para orçamento pessoal: o usuário calcula grátis e, ao pagar (Pix manual), pode **salvar mês a mês** e ver um **dashboard simples**.  
+Backend pronto com **Supabase (Auth + Postgres + RLS)**.
 
-Currently, two official plugins are available:
+## ✨ Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- ✅ Login / Cadastro com **email e senha** (Supabase Auth)
+- ✅ Calculadora: renda, gastos fixos e variáveis
+- ✅ Campos aceitam expressões (ex: `10+20+160`) para somar gastos
+- ✅ Salvar orçamento do mês (1 registro por mês)
+- ✅ Dashboard mês a mês + resumo (último mês, melhor mês, média)
+- ✅ Paywall: salvar/histórico só com acesso liberado
+- ✅ Liberação **manual via Pix** por **30 dias** usando `paid_until`
+- ✅ Segurança real no banco com **RLS** (não dá pra burlar pelo front)
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🧱 Stack
 
-## Expanding the ESLint configuration
+- **Frontend:** React + Vite
+- **Backend:** Supabase
+  - Auth (email/senha)
+  - Postgres
+  - Row Level Security (RLS)
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+---
+
+## 🚀 Rodando localmente
+
+### 1) Clonar e instalar
+```bash
+git clone <SEU_REPO_AQUI>
+cd <PASTA_DO_PROJETO>
+npm install
