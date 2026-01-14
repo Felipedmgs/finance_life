@@ -1,0 +1,48 @@
+alter table public.profiles enable row level security;
+alter table public.budgets enable row level security;
+
+-- PROFILES: cada um vê/insere seu perfil
+create policy "profiles_select_own"
+on public.profiles for select
+using (auth.uid() = user_id);
+
+create policy "profiles_insert_own"
+on public.profiles for insert
+with check (auth.uid() = user_id);
+
+create policy "profiles_update_own"
+on public.profiles for update
+using (auth.uid() = user_id)
+with check (auth.uid() = user_id);
+
+-- BUDGETS: cada um vê seus meses
+create policy "budgets_select_own"
+on public.budgets for select
+using (auth.uid() = user_id);
+
+-- Só salva/atualiza se tiver paid_until >= hoje
+create policy "budgets_insert_paid_only"
+on public.budgets for insert
+with check (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.profiles p
+    where p.user_id = auth.uid()
+      and p.paid_until is not null
+      and p.paid_until >= current_date
+  )
+);
+
+create policy "budgets_update_paid_only"
+on public.budgets for update
+using (
+  auth.uid() = user_id
+  and exists (
+    select 1
+    from public.profiles p
+    where p.user_id = auth.uid()
+      and p.paid_until is not null
+      and p.paid_until >= current_date
+  )
+);
